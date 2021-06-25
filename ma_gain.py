@@ -8,18 +8,7 @@ from utils import xavier_init
 from utils import binary_sampler, uniform_sampler, sample_batch_index
 
 def MA_GAIN (data_x, gain_parameters):
-    '''Impute missing values in data_x
-    Args:
-    - data_x: original data with missing values
-    - gain_parameters: GAIN network parameters:
-      - batch_size: Batch size，128
-      - hint_rate: Hint rate，0.9
-      - alpha: Hyperparameter，100
-      - iterations: Iterations，10000
-
-    Returns:
-    - imputed_data: imputed data
-    '''
+    
     # Define mask matrix
     data_m = 1-np.isnan(data_x)
     # System parameters
