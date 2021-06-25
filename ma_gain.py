@@ -17,8 +17,8 @@ def MA_GAIN (data_x, gain_parameters):
     alpha = gain_parameters['alpha']
     iterations = gain_parameters['iterations']
 
-    # For data with miss rate = 0.5, lambda = 0.4 is used by default
-    lambda_ = 0.4
+    # For data with miss rate = 0.5, rho_m = 0.4 is used by default
+    rho_m = 0.4
     
     # Other parameters
     no, dim = data_x.shape
@@ -116,9 +116,9 @@ def MA_GAIN (data_x, gain_parameters):
 
     ## Iterations
     for it in tqdm(range(iterations)):
-        batch_idx = sample_batch_index(no_train, batch_size)
-        X_mb = norm_data_x_train[batch_idx, :]
-        M_mb = data_m_train[batch_idx, :]
+        batch_idx = sample_batch_index(no, batch_size)
+        X_mb = norm_data_x[batch_idx, :]
+        M_mb = data_m[batch_idx, :]
         # Sample random vectors
         Z_mb = uniform_sampler(0, 0.01, batch_size, dim)
         # Sample hint vectors
@@ -128,7 +128,7 @@ def MA_GAIN (data_x, gain_parameters):
         # Combine random vectors with observed vectors
         X_mb = M_mb * X_mb + (1-M_mb) * Z_mb
 
-        M2_mb = binary_sampler(lambda_ , batch_size, dim)
+        M2_mb = binary_sampler(rho_m, batch_size, dim)
         M2_mb = M2_mb * M_mb + (1 - M_mb)
 
         _, D_loss_curr, D_logit_curr, D_prob_curr = sess.run([D_solver, D_loss_temp, D_logit, D_prob], feed_dict = {M: M_mb, X: X_mb, H:H_mb})
