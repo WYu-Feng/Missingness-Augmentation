@@ -107,9 +107,9 @@ def GAIN (data_x, gain_parameters):
     ## Iterations
     for it in tqdm(range(iterations)):    
         # Sample batch
-        batch_idx = sample_batch_index(no_train, batch_size)
-        X_mb = norm_data_x_train[batch_idx, :]
-        M_mb = data_m_train[batch_idx, :]
+        batch_idx = sample_batch_index(no, batch_size)
+        X_mb = norm_data_x[batch_idx, :]
+        M_mb = data_m[batch_idx, :]
         # Sample random vectors  
         Z_mb = uniform_sampler(0, 0.01, batch_size, dim)
         # Sample hint vectors
