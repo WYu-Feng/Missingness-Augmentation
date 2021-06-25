@@ -1,6 +1,3 @@
-'''Main function for UCI letter and spam datasets.
-'''
-
 # Necessary packages
 from __future__ import absolute_import
 from __future__ import division
@@ -29,15 +26,11 @@ def main (args):
     data_x, miss_data_x, data_m = data_loader(data_name, miss_rate)
 
     # Impute missing data
-    imputed_data_train, imputed_data_test = MA_GAIN(miss_data_x, data_m,
-                                                    gain_parameters)  #Start this line to implement the Missingness Augmentation
+    # imputed_data = MA_GAIN(miss_data_x, gain_parameters)  #Start this line to implement the Missingness Augmentation
 
-    # imputed_data_train, imputed_data_test = GAIN(miss_data_x, data_m,
-    #                                              gain_parameters)  # Start this line to implement the original method
-
-    imputed_data_train, imputed_data_test = GAIN(miss_data_x, data_m, gain_parameters)     #Start this line to implement the original method
+    imputed_data = GAIN(miss_data_x, gain_parameters)     #Start this line to implement the original method
     rmse = rmse_loss(data_x, imputed_data, data_m)
-    print(data_name + ' dataset RMSE Performance: ',rmse)
+    print(data_name + ' dataset RMSE performance: ',rmse)
 
 
 if __name__ == '__main__': 
