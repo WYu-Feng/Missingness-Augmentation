@@ -21,7 +21,6 @@ def GAIN (data_x, gain_parameters):
     no, dim = data_x.shape
     # Hidden state dimensions
     h_dim = int(dim)
-    # Normalization，norm到0-1
     norm_data, norm_parameters = normalization(data_x)
     norm_data_x = np.nan_to_num(norm_data, 0)
 
@@ -59,7 +58,7 @@ def GAIN (data_x, gain_parameters):
   
     ## GAIN functions
     # Generator
-    def generator(x,m):
+    def generator(x, m):
         # Concatenate Mask and Data
         inputs = tf.concat(values = [x, m], axis = 1) 
         G_h1 = tf.nn.relu(tf.matmul(inputs, G_W1) + G_b1)
@@ -107,7 +106,6 @@ def GAIN (data_x, gain_parameters):
 
     ## Iterations
     for it in tqdm(range(iterations)):    
-        # start = time.time()
         # Sample batch
         batch_idx = sample_batch_index(no_train, batch_size)
         X_mb = norm_data_x_train[batch_idx, :]
@@ -125,7 +123,6 @@ def GAIN (data_x, gain_parameters):
         _, G_loss_curr, MSE_loss_curr = sess.run([G_solver, G_loss_temp, MSE_loss], feed_dict = {X: X_mb, M: M_mb, H:H_mb})
             
 
-    # train data
     Z_mb = uniform_sampler(0, 0.01, no, dim)
     M_mb = data_m
     X_mb = norm_data_x
